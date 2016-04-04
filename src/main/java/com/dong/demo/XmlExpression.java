@@ -7,8 +7,7 @@ public class XmlExpression {
 
 	public static void main(String[] args) {
 
-		ApplicationContext ctx = 
-				new ClassPathXmlApplicationContext("conf-spel.xml");
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("conf-spel.xml");
 
 		String hello1 = ctx.getBean("hello1", String.class);
 		String hello2 = ctx.getBean("hello2", String.class);
