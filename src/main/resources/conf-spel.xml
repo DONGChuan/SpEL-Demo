@@ -7,12 +7,14 @@
 	          http://www.springframework.org/schema/context  
 	          http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
+    <!-- -To support annotation -->
 	<context:annotation-config/>
 
 	<bean id="world" class="java.lang.String" >
 		<constructor-arg value="#{' World!'}" />
 	</bean>
-	
+
+    <!-- For XmlExpression -->
 	<bean id="hello1" class="java.lang.String" >
 		<constructor-arg value="#{'Hello'}#{world}" />
 	</bean>
@@ -21,9 +23,26 @@
 		<!-- But the following nested expression not supported -->
 		<!-- constructor-arg value="#{'Hello'#{world}}" /-->
 	</bean>
-
 	<bean id="hello3" class="java.lang.String" >
 		<constructor-arg value="#{'Hello' + @world}" />
+	</bean>
+
+    <!-- For AnnoExpression -->
+	<bean id="helloBean1" class="com.dong.demo.AnnoExpression"/>
+	<bean id="helloBean2" class="com.dong.demo.AnnoExpression">
+        <!-- It will override @Value  -->
+		<property name="value" value="helloBean2"/>
+	</bean>
+
+	<!-- For SpELLiteral -->
+	<bean id="spELLiteral" class="com.dong.demo.SpELLiteral">
+		<property name="count" value="#{5}"/>
+		<property name="message" value="The value is #{5}"/>
+		<property name="frequency" value="#{89.7}"/>
+		<property name="capacity" value="#{1e4}"/>
+		<property name="name1" value="#{'Chuck'}"/>
+		<property name="name2" value='#{"Chuck"}'/>
+		<property name="enabled" value="#{false}"/>
 	</bean>
 	
 </beans>
