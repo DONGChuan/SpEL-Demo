@@ -44,5 +44,11 @@
 		<property name="name2" value='#{"Chuck"}'/>
 		<property name="enabled" value="#{false}"/>
 	</bean>
+
+    <!-- For SpELClass -->
+    <bean id="spELClass" class="com.dong.demo.SpELClass">
+        <property name="pi" value="#{T(java.lang.Math).PI}"/>
+        <property name="randomNumber" value="#{T(java.lang.Math).random()}"/>
+    </bean>
 	
 </beans>
