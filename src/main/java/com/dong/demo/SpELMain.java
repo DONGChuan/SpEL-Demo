@@ -7,12 +7,17 @@ public class SpELMain {
 
 	public static void main(String[] args) {
 
-        // Test SpELLiteral
+        // Test SpEL Literal
         // testSpELLiteral();
 
-        // Test SpELClass
-        testSpELClass();
+        // Test SpEL Class
+        // testSpELClass();
 
+		// Test SpEL Math
+		// testSpELMath();
+
+        // Test SpEL List
+        testSpELList();
 	}
 	
 	private static void testSpELLiteral() {
@@ -44,5 +49,36 @@ public class SpELMain {
 
     }
 
+	private static void testSpELMath() {
+
+		ApplicationContext ctx =
+				new ClassPathXmlApplicationContext("conf-spel.xml");
+		SpELMath spELMath = ctx.getBean("spELMath", SpELMath.class);
+
+		System.out.println("Addition:" + spELMath.getAddition());
+		System.out.println("Multiplication:" + spELMath.getMultiplication());
+		System.out.println("Division:" + spELMath.getDivision());
+		System.out.println("Complementation:" + spELMath.getComplementation());
+		System.out.println("Involution:" + spELMath.getInvolution());
+
+	}
+
+    private static void testSpELList() {
+
+        ApplicationContext ctx =
+                new ClassPathXmlApplicationContext("conf-spel.xml");
+
+        SpELCityList spelCityList = (SpELCityList) ctx.getBean("spELCityList");
+
+        //ÔÚÏµÍ³¿ØÖÆÌ¨ÖÐ´òÓ¡ÐÅÏ¢
+        System.out.println("chosenCity1: " + spelCityList.getChosenCity1().getName());
+        System.out.println("chosenCity2: " + spelCityList.getChosenCity1().getName());
+        System.out.println("bigCities: " + spelCityList.getBigCities().size());
+        System.out.println("aBigCity1: " + spelCityList.getaBigCity1().getName());
+        System.out.println("aBigCity2: " + spelCityList.getaBigCity2().getName());
+        System.out.println("cityNames1: " + spelCityList.getCityNames1().size());
+        System.out.println("cityNames2: " + spelCityList.getCityNames1().size());
+        System.out.println("cityNames3: " + spelCityList.getCityNames1().size());
+    }
 
 }

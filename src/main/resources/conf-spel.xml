@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="  
 	          http://www.springframework.org/schema/beans  
 	          http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	          http://www.springframework.org/schema/util
+	          http://www.springframework.org/schema/util/spring-util-4.2.xsd
 	          http://www.springframework.org/schema/context  
 	          http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
@@ -50,5 +53,44 @@
         <property name="pi" value="#{T(java.lang.Math).PI}"/>
         <property name="randomNumber" value="#{T(java.lang.Math).random()}"/>
     </bean>
-	
+
+    <!-- For SpELCounter -->
+	<bean id="counter" class="com.dong.demo.SpELCounter">
+		<property name="total" value="#{100}"/>
+		<property name="count" value="#{10}"/>
+	</bean>
+
+    <!-- For SpELMath -->
+	<bean id="spELMath" class="com.dong.demo.SpELMath">
+		<property name="addition" value="#{counter.total + 42}"/>
+		<property name="multiplication" value="#{2 * T(java.lang.Math).PI * counter.total}"/>
+		<property name="division" value="#{counter.total / counter.count}"/>
+		<property name="complementation" value="#{counter.total % counter.count}"/>
+		<property name="involution" value="#{T(java.lang.Math).PI * counter.total ^ 2}"/>
+	</bean>
+
+    <!-- Create a list of beans -->
+    <util:list id="cities">
+        <bean class="com.dong.demo.SpELCity" p:name="Chicago" p:state="IL" p:population="2853114"/>
+        <bean class="com.dong.demo.SpELCity" p:name="Atlanta" p:state="GA" p:population="537958"/>
+        <bean class="com.dong.demo.SpELCity" p:name="Dallas" p:state="TX" p:population="1279910"/>
+        <bean class="com.dong.demo.SpELCity" p:name="Houston" p:state="TX" p:population="2242193"/>
+        <bean class="com.dong.demo.SpELCity" p:name="Odessa" p:state="TX" p:population="90943"/>
+        <bean class="com.dong.demo.SpELCity" p:name="El Paso" p:state="TX" p:population="613190"/>
+        <bean class="com.dong.demo.SpELCity" p:name="Jal" p:state="NM" p:population="1996"/>
+        <bean class="com.dong.demo.SpELCity" p:name="Las Cruces" p:state="NM" p:population="91865"/>
+    </util:list>
+
+    <!-- For SpELCityList -->
+    <bean id="spELCityList" class="com.dong.demo.SpELCityList">
+        <property name="chosenCity1" value="#{cities[2]}"/>
+        <property name="chosenCity2" value="#{cities[T(java.lang.Math).random() * cities.size()]}"/>
+        <property name="bigCities" value="#{cities.?[population gt 100000]}"/>
+        <property name="aBigCity1" value="#{cities.^[population gt 100000]}"/>
+        <property name="aBigCity2" value="#{cities.$[population gt 100000]}"/>
+        <property name="cityNames1" value="#{cities.![name]}"/>
+        <property name="cityNames2" value="#{cities.![name + ', ' + state]}"/>
+        <property name="cityNames3" value="#{cities.?[population gt 100000].![name + ', ' + state]}"/>
+    </bean>
+
 </beans>
